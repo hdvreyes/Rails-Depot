@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_product
   # GET /products
   # GET /products.json
   def index
@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
   end
-
+  
   # POST /products
   # POST /products.json
   def create
@@ -72,4 +72,11 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:title, :description, :image_url, :price)
     end
+
+    # Checks product validity
+    def invalid_product
+      logger.error "Attempt to access invalid product #{params[:id]}"
+      redirect_to products_url, notice: 'Product does not exist'  
+    end
+
 end
