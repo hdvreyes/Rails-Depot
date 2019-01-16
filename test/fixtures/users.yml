@@ -7,3 +7,7 @@ one:
 two:
   name: susannah
   password_digest: <%= BCrypt::Password.create('secret') %>
+
+three:
+  name: test
+  password_digest: <%= BCrypt::Password.create('test') %>

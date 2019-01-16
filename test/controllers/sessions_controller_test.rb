@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @product = products(:one)
+    @title = "The Great Book #{rand(1000)}"
+  end
 
   test "should prompt for login" do
     get login_url
@@ -24,6 +28,15 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to store_index_url
   end
 
+  test "should logout attempt to create product" do
+
+    delete logout_url
+
+    # post products_url, params: { product: { description: @product.description, image_url: @product.image_url, price: @product.price, title: @title } }
+    assert_nil session[:user_id]
+    patch product_url(@product), params: { product: { description: @product.description, image_url: @product.image_url, price: @product.price, title: @title } }
+
+  end
   # test "should get new" do
   #   get sessions_new_url
   #   assert_response :success

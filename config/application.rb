@@ -18,5 +18,11 @@ module Depot
 
     # Avoid logging CC
     config.filter_parameters += [:credit_card_number]
+
+    # Internationalization Config
+    config.middleware.use I18n::JS::Middleware
+
+    # Autoload library path
+    config.autoload_paths += %W(#{Rails.root}/lib)
   end
 end

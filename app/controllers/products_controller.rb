@@ -4,7 +4,11 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+
     @products = Product.all
+    @qString = params[:id]
+    @active = params[:active]
+
   end
 
   # GET /products/1
@@ -15,6 +19,11 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+  end
+
+  # sample action
+  def about_product
+    puts "hello"
   end
 
   # GET /products/1/edit
